@@ -18,6 +18,9 @@ const Form1 = () => {
     if (!values.name) {
      error.name="please enter your name"
     }
+    else if(values.name.length<4){
+       error.name="please enter minimum 4 charchter"
+    }
     //email validation
     if (!values.email) {
       error.email= "please enter your email address"
@@ -96,7 +99,7 @@ const Form1 = () => {
         <label htmlFor="name">Password</label>
         <br />
         <input
-          type="text"
+          type="password"
           placeholder="enter your number"
           name="password"
           className={`border-2  ${errordata.password ? 'border-red-500' : 'border-black'} p-1  rounded-sm focus:outline-none`}
