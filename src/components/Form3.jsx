@@ -20,9 +20,8 @@ const Form3 = () => {
       case "name":
         if (!value) {
           error.name = "please enter your name";
-        }
-        else if(value.length<4){
-            error.name="please enter minimum 4 charchter"
+        } else if (value.length < 4) {
+          error.name = "please enter minimum 4 charchter";
         }
         break;
       case "email":
@@ -43,32 +42,56 @@ const Form3 = () => {
         if (!value) {
           error.password = "please enter your password";
         }
+        if (value.length < 8 || value.length > 12) {
+          error.password = "Password must be between 8 and 12 characters.";
+        }
+        if (!/[A-Z]/.test(value)) {
+          error.password ="Password must contain at least one uppercase letter.";
+        }
+        if (!/[a-z]/.test(value)) {
+            error.password= "Password must contain at least one lowercase letter."
+          
+        }
+        if (!/\d/.test(value)) {
+          error.password="Password must contain at least one number.";
+        }
+        if (!/[!@#$%^&*]/.test(value)) {
+          error.password="Password must contain at least one special character."
+          
+        }
         break;
     }
 
     return error;
   };
-   const handleOnChange = (e) => {
+  const handleOnChange = (e) => {
     const { name, value } = e.target;
     setFormdata({ ...formdata, [name]: value });
-
-    const errors = validate(name, value);
-    console.log(errors);
-    setErrordata({...errors });
+  
+    const newError = validate(name, value);
+    setErrordata((prevErrors) => {
+      const updatedErrors = { ...prevErrors };
+      if (newError[name]) {
+        updatedErrors[name] = newError[name];
+      } else {
+        delete updatedErrors[name];
+      }
+  
+      return updatedErrors;
+    });
   };
-  const handleOnBlur=(e)=>{
-    const {name,value}=e.target
-    const error=validate(name,value);
-    setErrordata(error)
-  }
+  const handleOnBlur = (e) => {
+    const { name, value } = e.target;
+    const error = validate(name, value);
+    setErrordata(error);
+  };
   const handleOnSubmit = (e) => {
     e.preventDefault();
     if (Object.keys(errordata).length === 0) {
-        alert("signup successfully");
-      }
-      else{
-        alert("fill the missing details")
-      }
+      alert("signup successfully");
+    } else {
+      alert("fill the missing details");
+    }
   };
 
   return (
@@ -81,7 +104,9 @@ const Form3 = () => {
           type="text"
           placeholder="name"
           name="name"
-          className={`border-2  ${errordata.name ? 'border-red-500' : 'border-black'} p-1  rounded-sm focus:outline-none `}
+          className={`border-2  ${
+            errordata.name ? "border-red-500" : "border-black"
+          } p-1  rounded-sm focus:outline-none `}
           value={formdata.name}
           onChange={handleOnChange}
           onBlur={handleOnBlur}
@@ -93,33 +118,39 @@ const Form3 = () => {
           type="text"
           placeholder="email"
           name="email"
-          className={`border-2  ${errordata.email ? 'border-red-500' : 'border-black'} p-1  rounded-sm focus:outline-none `}
+          className={`border-2  ${
+            errordata.email ? "border-red-500" : "border-black"
+          } p-1  rounded-sm focus:outline-none `}
           value={formdata.email}
           onChange={handleOnChange}
           onBlur={handleOnBlur}
         />
         <p className="text-red-500 text-xs mb-3">{errordata.email}</p>
-       
+
         <label htmlFor="name">Mobile no.</label>
         <br />
         <input
           type="text"
           placeholder="enter your number"
           name="mobile"
-          className={`border-2  ${errordata.mobile ? 'border-red-500' : 'border-black'} p-1  rounded-sm focus:outline-none `}
+          className={`border-2  ${
+            errordata.mobile ? "border-red-500" : "border-black"
+          } p-1  rounded-sm focus:outline-none `}
           value={formdata.mobile}
           onChange={handleOnChange}
           onBlur={handleOnBlur}
         />
         <p className="text-red-500 text-xs mb-3">{errordata.mobile}</p>
-      
+
         <label htmlFor="name">Password</label>
         <br />
         <input
           type="password"
           placeholder="enter your number"
           name="password"
-          className={`border-2  ${errordata.password ? 'border-red-500' : 'border-black'} p-1  rounded-sm focus:outline-none `}
+          className={`border-2  ${
+            errordata.password ? "border-red-500" : "border-black"
+          } p-1  rounded-sm focus:outline-none `}
           value={formdata.password}
           onChange={handleOnChange}
           onBlur={handleOnBlur}

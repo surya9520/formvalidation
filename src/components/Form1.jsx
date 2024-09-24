@@ -37,12 +37,29 @@ const Form1 = () => {
      }
     //password validation
     if (!values.password) {
-    error.password= "please enter your password" 
-    }
+        error.password = "please enter your password";
+      }
+      if (values.password.length <8 || values.password.length >12) {
+        error.password = "Password must be between 8 and 12 characters.";
+      }
+      if (!/[A-Z]/.test(values.password)) {
+        error.password ="Password must contain at least one uppercase letter.";
+      }
+      if (!/[a-z]/.test(values.password)) {
+          error.password= "Password must contain at least one lowercase letter."
+        
+      }
+      if (!/\d/.test(values.password)) {
+        error.password="Password must contain at least one number.";
+      }
+      if (!/[!@#$%^&*]/.test(values.password)) {
+        error.password="Password must contain at least one special character."
+        
+      }
     return error;
   };
   const handleOnChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value} = e.target;
     setFormdata({ ...formdata, [name]: value });
   };
   const handleOnSubmit = (e) => {

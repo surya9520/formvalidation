@@ -40,9 +40,26 @@ const Form2 = () => {
         }
         break;
       case "password":
-        if (!value) {
-          error.password = "please enter your password";
-        }
+          if (!value) {
+            error.password = "please enter your password";
+          }
+          if (value.length <8 || value.length >12) {
+            error.password = "Password must be between 8 and 12 characters.";
+          }
+          if (!/[A-Z]/.test(value)) {
+            error.password ="Password must contain at least one uppercase letter.";
+          }
+          if (!/[a-z]/.test(value)) {
+              error.password= "Password must contain at least one lowercase letter."
+            
+          }
+          if (!/\d/.test(value)) {
+            error.password="Password must contain at least one number.";
+          }
+          if (!/[!@#$%^&*]/.test(value)) {
+            error.password="Password must contain at least one special character."
+            
+          }
         break;
     }
 
@@ -51,13 +68,28 @@ const Form2 = () => {
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setFormdata({ ...formdata, [name]: value });
-
-    const errors = validate(name, value);
-    console.log(errors);
-    setErrordata({...errors });
+  
+    const newError = validate(name, value);
+    setErrordata((prevErrors) => {
+      const updatedErrors = { ...prevErrors };
+      if (newError[name]) {
+        updatedErrors[name] = newError[name];
+      } else {
+        delete updatedErrors[name];
+      }
+  
+      return updatedErrors;
+    });
   };
-  const handleOnSubmit = (e) => {
+  
+  const handleOnSubmit = async(e) => {
     e.preventDefault();
+    const error={};
+    const data={...formdata};
+    for(let key in data){
+        error.key=validate(key,data[key]);
+    }
+    await setErrordata({...errordata,...error})
     if (Object.keys(errordata).length === 0) {
         alert("signup successfully");
       }
