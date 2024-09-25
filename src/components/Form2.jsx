@@ -20,9 +20,8 @@ const Form2 = () => {
       case "name":
         if (!value) {
           error.name = "please enter your name";
-        }
-        else if(value.length<4){
-            error.name="please enter minimum 4 charchter"
+        } else if (value.length < 4) {
+          error.name = "please enter minimum 4 charchter";
         }
         break;
       case "email":
@@ -40,26 +39,27 @@ const Form2 = () => {
         }
         break;
       case "password":
-          if (!value) {
-            error.password = "please enter your password";
-          }
-          if (value.length <8 || value.length >12) {
-            error.password = "Password must be between 8 and 12 characters.";
-          }
-          if (!/[A-Z]/.test(value)) {
-            error.password ="Password must contain at least one uppercase letter.";
-          }
-          if (!/[a-z]/.test(value)) {
-              error.password= "Password must contain at least one lowercase letter."
-            
-          }
-          if (!/\d/.test(value)) {
-            error.password="Password must contain at least one number.";
-          }
-          if (!/[!@#$%^&*]/.test(value)) {
-            error.password="Password must contain at least one special character."
-            
-          }
+        if (!value) {
+          error.password = "please enter your password";
+        }
+        if (value.length < 8 || value.length > 12) {
+          error.password = "Password must be between 8 and 12 characters.";
+        }
+        if (!/[A-Z]/.test(value)) {
+          error.password =
+            "Password must contain at least one uppercase letter.";
+        }
+        if (!/[a-z]/.test(value)) {
+          error.password =
+            "Password must contain at least one lowercase letter.";
+        }
+        if (!/\d/.test(value)) {
+          error.password = "Password must contain at least one number.";
+        }
+        if (!/[!@#$%^&*]/.test(value)) {
+          error.password =
+            "Password must contain at least one special character.";
+        }
         break;
     }
 
@@ -68,7 +68,7 @@ const Form2 = () => {
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setFormdata({ ...formdata, [name]: value });
-  
+
     const newError = validate(name, value);
     setErrordata((prevErrors) => {
       const updatedErrors = { ...prevErrors };
@@ -77,27 +77,33 @@ const Form2 = () => {
       } else {
         delete updatedErrors[name];
       }
-  
+
       return updatedErrors;
     });
   };
-  
-  const handleOnSubmit = async(e) => {
+
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
-    const error={};
-    const data={...formdata};
-    for(let key in data){
-        error.key=validate(key,data[key]);
+    const errors = {};
+    const data = { ...formdata };
+
+    for (let key in data) {
+      const validationError = validate(key, data[key]);
+      if (validationError[key]) {
+        errors[key] = validationError[key]; 
+      }
     }
-    await setErrordata({...errordata,...error})
-    if (Object.keys(errordata).length === 0) {
-        alert("signup successfully");
-      }
-      else{
-        alert("fill the missing details")
-      }
+
+    setErrordata(errors); 
+    console.log(errors);
+
+    if (Object.keys(errors).length === 0) {
+      alert("Signup successfully");
+    } 
   };
-  
+
+  console.log(errordata.email);
+
   return (
     <div className="container w-fit bg-gray-300-500 py-10 px-10 m-auto mt-48 rounded-md shadow-2xl">
       <h1 className="text-xl mb-4 underline">ON-TYPING VALIDATIION</h1>
@@ -108,7 +114,9 @@ const Form2 = () => {
           type="text"
           placeholder="name"
           name="name"
-          className={`border-2  ${errordata.name ? 'border-red-500' : 'border-black'} p-1  rounded-sm focus:outline-none `}
+          className={`border-2  ${
+            errordata.name ? "border-red-500" : "border-black"
+          } p-1  rounded-sm focus:outline-none `}
           value={formdata.name}
           onChange={handleOnChange}
         />
@@ -119,7 +127,9 @@ const Form2 = () => {
           type="text"
           placeholder="email"
           name="email"
-          className={`border-2  ${errordata.email ? 'border-red-500' : 'border-black'} p-1  rounded-sm focus:outline-none`}
+          className={`border-2  ${
+            errordata.email ? "border-red-500" : "border-black"
+          } p-1  rounded-sm focus:outline-none`}
           value={formdata.email}
           onChange={handleOnChange}
         />
@@ -131,7 +141,9 @@ const Form2 = () => {
           type="text"
           placeholder="enter your number"
           name="mobile"
-          className={`border-2  ${errordata.mobile ? 'border-red-500' : 'border-black'} p-1  rounded-sm focus:outline-none`}
+          className={`border-2  ${
+            errordata.mobile ? "border-red-500" : "border-black"
+          } p-1  rounded-sm focus:outline-none`}
           value={formdata.mobile}
           onChange={handleOnChange}
         />
@@ -143,7 +155,9 @@ const Form2 = () => {
           type="password"
           placeholder="enter your number"
           name="password"
-          className={`border-2  ${errordata.password ? 'border-red-500' : 'border-black'} p-1  rounded-sm focus:outline-none`}
+          className={`border-2  ${
+            errordata.password ? "border-red-500" : "border-black"
+          } p-1  rounded-sm focus:outline-none`}
           value={formdata.password}
           onChange={handleOnChange}
         />

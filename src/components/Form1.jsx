@@ -64,13 +64,10 @@ const Form1 = () => {
   };
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    setIsloading(true);
-    const error=validate(formdata);
-    setErrordata(error);
-    setIsloading(false);
-    console.log(errordata)
-    if(Object.keys(errordata).length==0){
-        console.log("form submitted sucessfully")
+    const validateerror=validate(formdata);
+    setErrordata(validateerror);
+    if(Object.keys(validateerror).length==0){
+        alert("form submitted sucessfully")
     }
     
   };

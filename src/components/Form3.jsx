@@ -67,7 +67,7 @@ const Form3 = () => {
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setFormdata({ ...formdata, [name]: value });
-  
+
     const newError = validate(name, value);
     setErrordata((prevErrors) => {
       const updatedErrors = { ...prevErrors };
@@ -76,22 +76,42 @@ const Form3 = () => {
       } else {
         delete updatedErrors[name];
       }
-  
+
       return updatedErrors;
     });
   };
   const handleOnBlur = (e) => {
     const { name, value } = e.target;
-    const error = validate(name, value);
-    setErrordata(error);
+    const newError = validate(name, value);
+    setErrordata((prevErrors) => {
+      const updatedErrors = { ...prevErrors };
+      if (newError[name]) {
+        updatedErrors[name] = newError[name];
+      } else {
+        delete updatedErrors[name];
+      }
+
+      return updatedErrors;
+    });
   };
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
-    if (Object.keys(errordata).length === 0) {
-      alert("signup successfully");
-    } else {
-      alert("fill the missing details");
+    const errors = {};
+    const data = { ...formdata };
+
+    for (let key in data) {
+      const validationError = validate(key, data[key]);
+      if (validationError[key]) {
+        errors[key] = validationError[key]; 
+      }
     }
+
+    setErrordata(errors); 
+    console.log(errors);
+
+    if (Object.keys(errors).length === 0) {
+      alert("Signup successfully");
+    } 
   };
 
   return (
