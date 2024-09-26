@@ -38,6 +38,14 @@ const Nav = () => {
               React-hook-form
             </Link>
           </li>
+          <li>
+            <Link
+              to={"/redux-counter-page"}
+              className="text-white hover:bg-gray-700 rounded px-3 py-2 transition duration-200"
+            >
+              redux-counter-page
+            </Link>
+          </li>
         </ul>
       </div>
     </nav>
