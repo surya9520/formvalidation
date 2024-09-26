@@ -30,6 +30,14 @@ const Nav = () => {
               Form-3
             </Link>
           </li>
+          <li>
+            <Link
+              to={"/react"}
+              className="text-white hover:bg-gray-700 rounded px-3 py-2 transition duration-200"
+            >
+              React-hook-form
+            </Link>
+          </li>
         </ul>
       </div>
     </nav>
