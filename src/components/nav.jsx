@@ -11,7 +11,7 @@ const Nav = () => {
               to={"/"}
               className="text-white hover:bg-gray-700 rounded px-3 py-2 transition duration-200"
             >
-              Form-1
+              onSubmit-validation
             </Link>
           </li>
           <li>
@@ -19,7 +19,7 @@ const Nav = () => {
               to={"/form2"}
               className="text-white hover:bg-gray-700 rounded px-3 py-2 transition duration-200"
             >
-              Form-2
+              onChange-validation
             </Link>
           </li>
           <li>
@@ -27,7 +27,7 @@ const Nav = () => {
               to={"/form3"}
               className="text-white hover:bg-gray-700 rounded px-3 py-2 transition duration-200"
             >
-              Form-3
+              OnBlur-validation
             </Link>
           </li>
           <li>
