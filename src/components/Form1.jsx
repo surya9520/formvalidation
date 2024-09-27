@@ -120,7 +120,7 @@ const Form1 = () => {
           value={formdata.password}
           onChange={handleOnChange}
         />
-        <p className="text-red-500 text-xs mb-3">{errordata.password}</p>
+        <p className="text-red-500 text-xs mb-3 max-w-48">{errordata.password}</p>
         <br />
         <button type="submit" className="text-white bg-blue-500 p-2">
           Submit
