@@ -129,7 +129,7 @@ const ReactForm1 = () => {
             
           })}
         />
-        <p className="text-red-500 text-xs mb-3">{errors.password?.message}</p>
+        <p className="text-red-500 text-xs mb-3 max-w-48">{errors.password?.message}</p>
         <br />
         <button type="submit" className="text-white bg-blue-500 p-2">
           Submit
